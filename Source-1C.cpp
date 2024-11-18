@@ -104,7 +104,7 @@ static GLfloat player[] = { // The coordinates of each vertex of each side of th
 static int player_pos[2] = { 2, 0 }; // The initial position of the player in the maze[10][10] array
 
 // The B object (treasure), which is a cube with each side being 0.8 in length
-
+static GLfloat treasure_color[RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM];
 static GLfloat treasure[] = {
 	/* Bottom Side */
 	-3.75f, 2.25f, 0.0f,
@@ -154,7 +154,6 @@ static GLfloat treasure[] = {
 	-3.25f, 2.25f, 1.0f,
 	-3.25f, 2.25f, 0.0f
 };
-static GLfloat treasure_color[RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM];
 	
 
 /* FOR THE CAMERA */
