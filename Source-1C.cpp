@@ -190,7 +190,6 @@ void findAvailableTreasurePos() {
 	}
 }
 
-
 // Random position of treasure (in relation to maze[10][10])
 int generateRandomNumber() {
 	srand(static_cast<unsigned int>(time(0)));
@@ -198,31 +197,29 @@ int generateRandomNumber() {
 	return randomNumber;
 }
 
+// Update the coordinates of the treasure accordingly
 void updateTreasurePos(double newY, double newX) {
-	int diffY = (newY - treasure_pos[0]);
-	int diffX = (newX - treasure_pos[1]);
-
-	if (diffY < 0) {
-		for (int i = 1; i < 36*3; i += 3) {
-			treasure[i] -= diffY;
+	if (newY < treasure_pos[0]) { //This means we are going up
+		for (int i = 1; i < (36 * 3); i += 3) {
+			treasure[i] += abs(newY - treasure_pos[0])*1.0f;
 		}
 	}
 
-	if (diffX < 0) {
-		for (int i = 0; i < 36*3; i += 3) {
-			treasure[i] -= diffX;
+	if (newY > treasure_pos[0]) { //This means we are going down
+		for (int i = 1; i < (36 * 3); i += 3) {
+			treasure[i] -= abs(newY - treasure_pos[0])*1.0f;
 		}
 	}
 
-	if (diffY >= 0) {
-		for (int i = 1; i < 36 * 3; i += 3) {
-			treasure[i] += diffY;
+	if (newX < treasure_pos[1]) { //This means we are going to the left
+		for (int i = 0; i < (36 * 3); i += 3) {
+			treasure[i] -= abs(newX - treasure_pos[1])*1.0f;
 		}
 	}
 
-	if (diffX >= 0) {
-		for (int i = 0; i < 36 * 3; i += 3) {
-			treasure[i] += diffX;
+	if (newX > treasure_pos[1]) { //This means we are going to the right
+		for (int i = 0; i < (36 * 3); i += 3) {
+			treasure[i] += abs(newX - treasure_pos[1]) * 1.0f;
 		}
 	}
 
@@ -918,22 +915,19 @@ int main(void)
 		// Initialize the availableTreasurePos array
 		initAvailableTreasurePos();
 
+		// For the random spawn of the treasure
 		static double lastTime = 0.0;
 		double currentTime = glfwGetTime();
 
 		if (currentTime - lastTime > 3.0) {  // Move every 2 seconds
 			findAvailableTreasurePos();
 			int randomNumber = generateRandomNumber();
-			int newX = availableTreasurePos[randomNumber][1];
 			int newY = availableTreasurePos[randomNumber][0];
+			int newX = availableTreasurePos[randomNumber][1];
 
 			updateTreasurePos(newY, newX);
-			printf("%d   %d\n", newY, newX);
-			printf("------------------");
-			printf("%d   %d\n", treasure_pos[0], treasure_pos[1]);
 			lastTime = currentTime;
 		}
-
 
 		// For the movement of the player
 		glfwSetKeyCallback(window, movePlayer);
