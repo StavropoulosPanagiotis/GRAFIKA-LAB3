@@ -61,43 +61,43 @@ static GLfloat player[] = { // The coordinates of each vertex of each side of th
 	-4.25f, 2.75f, 0.0f,
 
 	/* Top Side */
-	-4.75f, 2.25f, 1.0f,
-	-4.75f, 2.75f, 1.0f,
-	-4.25f, 2.25f, 1.0f,
-	-4.75f, 2.75f, 1.0f,
-	-4.25f, 2.25f, 1.0f,
-	-4.25f, 2.75f, 1.0f,
+	-4.75f, 2.25f, 0.5f,
+	-4.75f, 2.75f, 0.5f,
+	-4.25f, 2.25f, 0.5f,
+	-4.75f, 2.75f, 0.5f,
+	-4.25f, 2.25f, 0.5f,
+	-4.25f, 2.75f, 0.5f,
 
 	/* Front Side */
 	-4.75f, 2.25f, 0.0f,
-	-4.75f, 2.25f, 1.0f,
+	-4.75f, 2.25f, 0.5f,
 	-4.25f, 2.25f, 0.0f,
 	-4.25f, 2.25f, 0.0f,
-	-4.25f, 2.25f, 1.0f,
-	-4.75f, 2.25f, 1.0f,
+	-4.25f, 2.25f, 0.5f,
+	-4.75f, 2.25f, 0.5f,
 
 	/* Back Side */
 	-4.75f, 2.75f, 0.0f,
-	-4.75f, 2.75f, 1.0f,
+	-4.75f, 2.75f, 0.5f,
 	-4.25f, 2.75f, 0.0f,
 	-4.25f, 2.75f, 0.0f,
-	-4.25f, 2.75f, 1.0f,
-	-4.75f, 2.75f, 1.0f,
+	-4.25f, 2.75f, 0.5f,
+	-4.75f, 2.75f, 0.5f,
 
 	/* Left Side */
 	-4.75f, 2.25f, 0.0f,
 	-4.75f, 2.75f, 0.0f,
-	-4.75f, 2.75f, 1.0f,
-	-4.75f, 2.75f, 1.0f,
-	-4.75f, 2.25f, 1.0f,
+	-4.75f, 2.75f, 0.5f,
+	-4.75f, 2.75f, 0.5f,
+	-4.75f, 2.25f, 0.5f,
 	-4.75f, 2.25f, 0.0f,
 
 	/* Right Side */
 	-4.25f, 2.25f, 0.0f,
 	-4.25f, 2.75f, 0.0f,
-	-4.25f, 2.75f, 1.0f,
-	-4.25f, 2.75f, 1.0f,
-	-4.25f, 2.25f, 1.0f,
+	-4.25f, 2.75f, 0.5f,
+	-4.25f, 2.75f, 0.5f,
+	-4.25f, 2.25f, 0.5f,
 	-4.25f, 2.25f, 0.0f
 };
 
@@ -119,49 +119,51 @@ static GLfloat treasure[] = {
 
 
 	/* Top Side */
-	-4.9f, 2.1f, 1.0f,
-	-4.9f, 2.9f, 1.0f,
-	-4.1f, 2.1f, 1.0f,
-	-4.9f, 2.9f, 1.0f,
-	-4.1f, 2.1f, 1.0f,
-	-4.1f, 2.9f, 1.0f,
+	-4.9f, 2.1f, 0.8f,
+	-4.9f, 2.9f, 0.8f,
+	-4.1f, 2.1f, 0.8f,
+	-4.9f, 2.9f, 0.8f,
+	-4.1f, 2.1f, 0.8f,
+	-4.1f, 2.9f, 0.8f,
 
 
 	/* Front Side */
 	-4.9f, 2.1f, 0.0f,
-	-4.9f, 2.1f, 1.0f,
+	-4.9f, 2.1f, 0.8f,
 	-4.1f, 2.1f, 0.0f,
 	-4.1f, 2.1f, 0.0f,
-	-4.1f, 2.1f, 1.0f,
-	-4.9f, 2.1f, 1.0f,
+	-4.1f, 2.1f, 0.8f,
+	-4.9f, 2.1f, 0.8f,
 
 
 	/* Back Side */
 	-4.9f, 2.9f, 0.0f,
-	-4.9f, 2.9f, 1.0f,
+	-4.9f, 2.9f, 0.8f,
 	-4.1f, 2.9f, 0.0f,
 	-4.1f, 2.9f, 0.0f,
-	-4.1f, 2.9f, 1.0f,
-	-4.9f, 2.9f, 1.0f,
+	-4.1f, 2.9f, 0.8f,
+	-4.9f, 2.9f, 0.8f,
 
 
 	/* Left Side */
 	-4.9f, 2.1f, 0.0f,
 	-4.9f, 2.9f, 0.0f,
-	-4.9f, 2.9f, 1.0f,
-	-4.9f, 2.9f, 1.0f,
-	-4.9f, 2.1f, 1.0f,
+	-4.9f, 2.9f, 0.8f,
+	-4.9f, 2.9f, 0.8f,
+	-4.9f, 2.1f, 0.8f,
 	-4.9f, 2.1f, 0.0f,
 
 
 	/* Right Side */
 	-4.1f, 2.1f, 0.0f,
 	-4.1f, 2.9f, 0.0f,
-	-4.1f, 2.9f, 1.0f,
-	-4.1f, 2.9f, 1.0f,
-	-4.1f, 2.1f, 1.0f,
+	-4.1f, 2.9f, 0.8f,
+	-4.1f, 2.9f, 0.8f,
+	-4.1f, 2.1f, 0.8f,
 	-4.1f, 2.1f, 0.0f,
 };
+
+static int treasure_pos[2] = { 2, 0 }; // [0] is for y and [1] is for x
 
 // 44 available "pairs" (x, y) for the treasure to spawn (in relation to maze[10][10])
 static int availableTreasurePos[44][2];
@@ -188,12 +190,6 @@ void findAvailableTreasurePos() {
 	}
 }
 
-void printAvailableTreasurePos() {
-	for (int i = 0; i < 44; i++) {
-		printf("[%d  %d]\n", availableTreasurePos[i][0], availableTreasurePos[i][1]);
-	}
-	printf("#########################################");
-}
 
 // Random position of treasure (in relation to maze[10][10])
 int generateRandomNumber() {
@@ -202,18 +198,36 @@ int generateRandomNumber() {
 	return randomNumber;
 }
 
-void updateTreasurePos(double x, double y) {
-	int randomNumber = generateRandomNumber();
-	int initialPosX = availableTreasurePos[randomNumber][1];
-	int initialPosY = availableTreasurePos[randomNumber][0];
+void updateTreasurePos(double newY, double newX) {
+	int diffY = (newY - treasure_pos[0]);
+	int diffX = (newX - treasure_pos[1]);
 
-	for (int i = 0; i < 36*3; i += 3) {
-		treasure[i] += x;
+	if (diffY < 0) {
+		for (int i = 1; i < 36*3; i += 3) {
+			treasure[i] -= diffY;
+		}
 	}
-	
-	for (int i = 1; i < 36*3; i += 3) {
-		treasure[i] += y;
+
+	if (diffX < 0) {
+		for (int i = 0; i < 36*3; i += 3) {
+			treasure[i] -= diffX;
+		}
 	}
+
+	if (diffY >= 0) {
+		for (int i = 1; i < 36 * 3; i += 3) {
+			treasure[i] += diffY;
+		}
+	}
+
+	if (diffX >= 0) {
+		for (int i = 0; i < 36 * 3; i += 3) {
+			treasure[i] += diffX;
+		}
+	}
+
+	treasure_pos[0] = newY;
+	treasure_pos[1] = newX;
 }
 
 //------------------------------------------------
@@ -876,15 +890,6 @@ int main(void)
 
 
 		// For the treasure
-
-		static double lastTime = 0.0;
-		double currentTime = glfwGetTime();
-
-		if (currentTime - lastTime > 2.0) {  // Move every 2 seconds
-			updateTreasurePos(0.5, 0.0);
-			lastTime = currentTime;
-		}
-
 		glBindBuffer(GL_ARRAY_BUFFER, treasurebuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(treasure), treasure, GL_STATIC_DRAW);
 		glVertexAttribPointer(
@@ -912,6 +917,22 @@ int main(void)
 
 		// Initialize the availableTreasurePos array
 		initAvailableTreasurePos();
+
+		static double lastTime = 0.0;
+		double currentTime = glfwGetTime();
+
+		if (currentTime - lastTime > 3.0) {  // Move every 2 seconds
+			findAvailableTreasurePos();
+			int randomNumber = generateRandomNumber();
+			int newX = availableTreasurePos[randomNumber][1];
+			int newY = availableTreasurePos[randomNumber][0];
+
+			updateTreasurePos(newY, newX);
+			printf("%d   %d\n", newY, newX);
+			printf("------------------");
+			printf("%d   %d\n", treasure_pos[0], treasure_pos[1]);
+			lastTime = currentTime;
+		}
 
 
 		// For the movement of the player
