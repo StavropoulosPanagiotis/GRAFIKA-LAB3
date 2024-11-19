@@ -1,2 +1,4 @@
 ﻿  Source-1C.cpp
+C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\Source-1C.cpp(211,18): warning C4244: '+=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\Source-1C.cpp(215,18): warning C4244: '+=': conversion from 'double' to 'GLfloat', possible loss of data
   GRAFIKA-LAB3.vcxproj -> C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\x64\Debug\GRAFIKA-LAB3.exe

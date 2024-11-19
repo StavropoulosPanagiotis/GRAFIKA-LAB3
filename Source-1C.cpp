@@ -105,56 +105,62 @@ static int player_pos[2] = { 2, 0 }; // The initial position of the player in th
 
 
 // ---------- FOR THE TREASURE ----------
-// The B object (treasure), which is a cube with each side being 0.8 in length
 static GLfloat treasure_color[RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM];
+
+// Initial treasure coordinates (the treasure is a cube with 0.8 length on each side)
 static GLfloat treasure[] = {
 	/* Bottom Side */
-	-3.75f, 2.25f, 0.0f,
-	-3.75f, 2.75f, 0.0f,
-	-3.25f, 2.25f, 0.0f,
-	-3.75f, 2.75f, 0.0f,
-	-3.25f, 2.25f, 0.0f,
-	-3.25f, 2.75f, 0.0f,
+	-4.9f, 2.1f, 0.0f,
+	-4.9f, 2.9f, 0.0f,
+	-4.1f, 2.1f, 0.0f,
+	-4.9f, 2.9f, 0.0f,
+	-4.1f, 2.1f, 0.0f,
+	-4.1f, 2.9f, 0.0f,
+
 
 	/* Top Side */
-	-3.75f, 2.25f, 1.0f,
-	-3.75f, 2.75f, 1.0f,
-	-3.25f, 2.25f, 1.0f,
-	-3.75f, 2.75f, 1.0f,
-	-3.25f, 2.25f, 1.0f,
-	-3.25f, 2.75f, 1.0f,
+	-4.9f, 2.1f, 1.0f,
+	-4.9f, 2.9f, 1.0f,
+	-4.1f, 2.1f, 1.0f,
+	-4.9f, 2.9f, 1.0f,
+	-4.1f, 2.1f, 1.0f,
+	-4.1f, 2.9f, 1.0f,
+
 
 	/* Front Side */
-	-3.75f, 2.25f, 0.0f,
-	-3.75f, 2.25f, 1.0f,
-	-3.25f, 2.25f, 0.0f,
-	-3.25f, 2.25f, 0.0f,
-	-3.25f, 2.25f, 1.0f,
-	-3.75f, 2.25f, 1.0f,
+	-4.9f, 2.1f, 0.0f,
+	-4.9f, 2.1f, 1.0f,
+	-4.1f, 2.1f, 0.0f,
+	-4.1f, 2.1f, 0.0f,
+	-4.1f, 2.1f, 1.0f,
+	-4.9f, 2.1f, 1.0f,
+
 
 	/* Back Side */
-	-3.75f, 2.75f, 0.0f,
-	-3.75f, 2.75f, 1.0f,
-	-3.25f, 2.75f, 0.0f,
-	-3.25f, 2.75f, 0.0f,
-	-3.25f, 2.75f, 1.0f,
-	-3.75f, 2.75f, 1.0f,
+	-4.9f, 2.9f, 0.0f,
+	-4.9f, 2.9f, 1.0f,
+	-4.1f, 2.9f, 0.0f,
+	-4.1f, 2.9f, 0.0f,
+	-4.1f, 2.9f, 1.0f,
+	-4.9f, 2.9f, 1.0f,
+
 
 	/* Left Side */
-	-3.75f, 2.25f, 0.0f,
-	-3.75f, 2.75f, 0.0f,
-	-3.75f, 2.75f, 1.0f,
-	-3.75f, 2.75f, 1.0f,
-	-3.75f, 2.25f, 1.0f,
-	-3.75f, 2.25f, 0.0f,
+	-4.9f, 2.1f, 0.0f,
+	-4.9f, 2.9f, 0.0f,
+	-4.9f, 2.9f, 1.0f,
+	-4.9f, 2.9f, 1.0f,
+	-4.9f, 2.1f, 1.0f,
+	-4.9f, 2.1f, 0.0f,
+
 
 	/* Right Side */
-	-3.25f, 2.25f, 0.0f,
-	-3.25f, 2.75f, 0.0f,
-	-3.25f, 2.75f, 1.0f,
-	-3.25f, 2.75f, 1.0f,
-	-3.25f, 2.25f, 1.0f,
-	-3.25f, 2.25f, 0.0f
+	-4.1f, 2.1f, 0.0f,
+	-4.1f, 2.9f, 0.0f,
+	-4.1f, 2.9f, 1.0f,
+	-4.1f, 2.9f, 1.0f,
+	-4.1f, 2.1f, 1.0f,
+	-4.1f, 2.1f, 0.0f,
 };
 
 // 44 available "pairs" (x, y) for the treasure to spawn (in relation to maze[10][10])
@@ -188,6 +194,28 @@ void printAvailableTreasurePos() {
 	}
 	printf("#########################################");
 }
+
+// Random position of treasure (in relation to maze[10][10])
+int generateRandomNumber() {
+	srand(static_cast<unsigned int>(time(0)));
+	int randomNumber = rand() % 44;
+	return randomNumber;
+}
+
+void updateTreasurePos(double x, double y) {
+	int randomNumber = generateRandomNumber();
+	int initialPosX = availableTreasurePos[randomNumber][1];
+	int initialPosY = availableTreasurePos[randomNumber][0];
+
+	for (int i = 0; i < 36*3; i += 3) {
+		treasure[i] += x;
+	}
+	
+	for (int i = 1; i < 36*3; i += 3) {
+		treasure[i] += y;
+	}
+}
+
 //------------------------------------------------
 
 
@@ -612,7 +640,7 @@ void movePlayer(GLFWwindow* window, int key, int scancode, int action, int mods)
 			}
 		}
 		findAvailableTreasurePos();
-		printAvailableTreasurePos();
+		//updateTreasurePos(0.0, 0.5);
 		break;
 
 	case GLFW_KEY_J:
@@ -639,7 +667,7 @@ void movePlayer(GLFWwindow* window, int key, int scancode, int action, int mods)
 			}
 		}
 		findAvailableTreasurePos();
-		printAvailableTreasurePos();
+		//updateTreasurePos(-0.5, 0.0);
 		break;
 
 	case GLFW_KEY_K:
@@ -651,8 +679,8 @@ void movePlayer(GLFWwindow* window, int key, int scancode, int action, int mods)
 				player[i] -= 1.0f;
 			}
 		}
+		//updateTreasurePos(0.0, -0.5);
 		findAvailableTreasurePos();
-		printAvailableTreasurePos();
 		break;
 
 	case GLFW_KEY_L:
@@ -679,8 +707,8 @@ void movePlayer(GLFWwindow* window, int key, int scancode, int action, int mods)
 				player[i] += 1.0f;
 			}
 		}
+		//updateTreasurePos(0.5, 0.0);
 		findAvailableTreasurePos();
-		printAvailableTreasurePos();
 	default:
 		break;
 	}
@@ -846,7 +874,17 @@ int main(void)
 		// Draw player
 		glDrawArrays(GL_TRIANGLES, 0, RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM);
 
+
 		// For the treasure
+
+		static double lastTime = 0.0;
+		double currentTime = glfwGetTime();
+
+		if (currentTime - lastTime > 2.0) {  // Move every 2 seconds
+			updateTreasurePos(0.5, 0.0);
+			lastTime = currentTime;
+		}
+
 		glBindBuffer(GL_ARRAY_BUFFER, treasurebuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(treasure), treasure, GL_STATIC_DRAW);
 		glVertexAttribPointer(
@@ -872,7 +910,9 @@ int main(void)
 		// Draw treasure
 		glDrawArrays(GL_TRIANGLES, 0, RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM);
 
+		// Initialize the availableTreasurePos array
 		initAvailableTreasurePos();
+
 
 		// For the movement of the player
 		glfwSetKeyCallback(window, movePlayer);
@@ -885,8 +925,8 @@ int main(void)
 		glfwPollEvents();
 
 	} // Check if the SPACE key was pressed or the window was closed
-	while (glfwGetKey(window, GLFW_KEY_SPACE) != GLFW_PRESS &&
-		glfwWindowShouldClose(window) == 0);
+	while (glfwGetKey(window, GLFW_KEY_SPACE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0);
+
 
 	// Cleanup VBO
 	glDeleteBuffers(1, &mazebuffer);
