@@ -103,6 +103,8 @@ static GLfloat player[] = { // The coordinates of each vertex of each side of th
 
 static int player_pos[2] = { 2, 0 }; // The initial position of the player in the maze[10][10] array
 
+
+// ---------- FOR THE TREASURE ----------
 // The B object (treasure), which is a cube with each side being 0.8 in length
 static GLfloat treasure_color[RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM];
 static GLfloat treasure[] = {
@@ -154,7 +156,40 @@ static GLfloat treasure[] = {
 	-3.25f, 2.25f, 1.0f,
 	-3.25f, 2.25f, 0.0f
 };
+
+// 44 available "pairs" (x, y) for the treasure to spawn (in relation to maze[10][10])
+static int availableTreasurePos[44][2];
 	
+// Initialize values to -1
+void initAvailableTreasurePos() {
+	for (int i = 0; i < 44; i++) {
+		availableTreasurePos[i][0] = -1;
+		availableTreasurePos[i][1] = -1;
+	}
+}
+
+// To check where the treasure can spawn
+void findAvailableTreasurePos() {
+	int index = 0; // For each one of the 44 pairs
+	for (int i = 0; i < 10; i++) { // i is for the y
+		for (int j = 0; j < 10; j++) { // j is for the x
+			if (maze[i][j] != 1 && (player_pos[0] != i || player_pos[1] != j)) {
+				availableTreasurePos[index][0] = i; // Store y-coordinate
+				availableTreasurePos[index][1] = j; // Store x-coordinate
+				index++;
+			}
+		}
+	}
+}
+
+void printAvailableTreasurePos() {
+	for (int i = 0; i < 44; i++) {
+		printf("[%d  %d]\n", availableTreasurePos[i][0], availableTreasurePos[i][1]);
+	}
+	printf("#########################################");
+}
+//------------------------------------------------
+
 
 /* FOR THE CAMERA */
 glm::mat4 ViewMatrix;
@@ -349,7 +384,7 @@ static void initColors() {
 	}
 
 	for (int i = 0; i < (RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM); i += 3) {
-		treasure_color[i] = 1.0f;
+		treasure_color[i] = 0.0f;
 		treasure_color[i + 1] = 1.0f;
 		treasure_color[i + 2] = 0.0f;
 	}
@@ -524,6 +559,7 @@ static void initMaze() {
 	initColors();
 }
 
+
 bool isMoveValid(int key) {
 	int maze_walls_vertices_size = (55 * 3 * 3 * 2);
 
@@ -575,6 +611,8 @@ void movePlayer(GLFWwindow* window, int key, int scancode, int action, int mods)
 				player[i] += 1.0f;
 			}
 		}
+		findAvailableTreasurePos();
+		printAvailableTreasurePos();
 		break;
 
 	case GLFW_KEY_J:
@@ -590,7 +628,6 @@ void movePlayer(GLFWwindow* window, int key, int scancode, int action, int mods)
 				for (int i = 1; i < (36 * 3); i += 3) {
 					player[i] -= 5.0f;
 				}
-
 				break;
 			}
 
@@ -601,6 +638,8 @@ void movePlayer(GLFWwindow* window, int key, int scancode, int action, int mods)
 				player[i] -= 1.0f;
 			}
 		}
+		findAvailableTreasurePos();
+		printAvailableTreasurePos();
 		break;
 
 	case GLFW_KEY_K:
@@ -612,6 +651,8 @@ void movePlayer(GLFWwindow* window, int key, int scancode, int action, int mods)
 				player[i] -= 1.0f;
 			}
 		}
+		findAvailableTreasurePos();
+		printAvailableTreasurePos();
 		break;
 
 	case GLFW_KEY_L:
@@ -638,7 +679,8 @@ void movePlayer(GLFWwindow* window, int key, int scancode, int action, int mods)
 				player[i] += 1.0f;
 			}
 		}
-		break;
+		findAvailableTreasurePos();
+		printAvailableTreasurePos();
 	default:
 		break;
 	}
@@ -829,6 +871,8 @@ int main(void)
 
 		// Draw treasure
 		glDrawArrays(GL_TRIANGLES, 0, RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM);
+
+		initAvailableTreasurePos();
 
 		// For the movement of the player
 		glfwSetKeyCallback(window, movePlayer);
