@@ -650,8 +650,6 @@ void movePlayer(GLFWwindow* window, int key, int scancode, int action, int mods)
 				player[i] += 1.0f;
 			}
 		}
-		findAvailableTreasurePos();
-		//updateTreasurePos(0.0, 0.5);
 		break;
 
 	case GLFW_KEY_J:
@@ -677,8 +675,6 @@ void movePlayer(GLFWwindow* window, int key, int scancode, int action, int mods)
 				player[i] -= 1.0f;
 			}
 		}
-		findAvailableTreasurePos();
-		//updateTreasurePos(-0.5, 0.0);
 		break;
 
 	case GLFW_KEY_K:
@@ -690,8 +686,6 @@ void movePlayer(GLFWwindow* window, int key, int scancode, int action, int mods)
 				player[i] -= 1.0f;
 			}
 		}
-		//updateTreasurePos(0.0, -0.5);
-		findAvailableTreasurePos();
 		break;
 
 	case GLFW_KEY_L:
@@ -718,8 +712,6 @@ void movePlayer(GLFWwindow* window, int key, int scancode, int action, int mods)
 				player[i] += 1.0f;
 			}
 		}
-		//updateTreasurePos(0.5, 0.0);
-		findAvailableTreasurePos();
 	default:
 		break;
 	}
@@ -919,7 +911,7 @@ int main(void)
 		static double lastTime = 0.0;
 		double currentTime = glfwGetTime();
 
-		if (currentTime - lastTime > 3.0) {  // Move every 2 seconds
+		if (currentTime - lastTime >= 3.0) {  // Move every 3 seconds
 			findAvailableTreasurePos();
 			int randomNumber = generateRandomNumber();
 			int newY = availableTreasurePos[randomNumber][0];
