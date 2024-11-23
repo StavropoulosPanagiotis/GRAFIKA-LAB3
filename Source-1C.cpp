@@ -110,62 +110,57 @@ static int player_pos[2] = { 2, 0 }; // The initial position of the player in th
 
 
 // ---------- FOR THE TREASURE ----------
-static GLfloat treasure_color[RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM];
 
 // Initial treasure coordinates (the treasure is a cube with 0.8 length on each side)
+// Vertices for the treasure (position, texture coordinates)
 static GLfloat treasure[] = {
 	/* Bottom Side */
-	-4.9f, 2.1f, 0.0f,
-	-4.9f, 2.9f, 0.0f,
-	-4.1f, 2.1f, 0.0f,
-	-4.9f, 2.9f, 0.0f,
-	-4.1f, 2.1f, 0.0f,
-	-4.1f, 2.9f, 0.0f,
-
+	-4.9f, 2.1f, 0.0f,   0.0f, 0.0f,  // Vertex 1 (position and texture coordinate)
+	-4.9f, 2.9f, 0.0f,   0.0f, 1.0f,  // Vertex 2
+	-4.1f, 2.1f, 0.0f,   1.0f, 0.0f,  // Vertex 3
+	-4.9f, 2.9f, 0.0f,   0.0f, 1.0f,  // Vertex 4
+	-4.1f, 2.1f, 0.0f,   1.0f, 0.0f,  // Vertex 5
+	-4.1f, 2.9f, 0.0f,   1.0f, 1.0f,  // Vertex 6
 
 	/* Top Side */
-	-4.9f, 2.1f, 0.8f,
-	-4.9f, 2.9f, 0.8f,
-	-4.1f, 2.1f, 0.8f,
-	-4.9f, 2.9f, 0.8f,
-	-4.1f, 2.1f, 0.8f,
-	-4.1f, 2.9f, 0.8f,
-
+	-4.9f, 2.1f, 0.8f,   0.0f, 0.0f,
+	-4.9f, 2.9f, 0.8f,   0.0f, 1.0f,
+	-4.1f, 2.1f, 0.8f,   1.0f, 0.0f,
+	-4.9f, 2.9f, 0.8f,   0.0f, 1.0f,
+	-4.1f, 2.1f, 0.8f,   1.0f, 0.0f,
+	-4.1f, 2.9f, 0.8f,   1.0f, 1.0f,
 
 	/* Front Side */
-	-4.9f, 2.1f, 0.0f,
-	-4.9f, 2.1f, 0.8f,
-	-4.1f, 2.1f, 0.0f,
-	-4.1f, 2.1f, 0.0f,
-	-4.1f, 2.1f, 0.8f,
-	-4.9f, 2.1f, 0.8f,
-
+	-4.9f, 2.1f, 0.0f,   0.0f, 0.0f,
+	-4.9f, 2.1f, 0.8f,   0.0f, 1.0f,
+	-4.1f, 2.1f, 0.0f,   1.0f, 0.0f,
+	-4.1f, 2.1f, 0.0f,   1.0f, 0.0f,
+	-4.1f, 2.1f, 0.8f,   1.0f, 1.0f,
+	-4.9f, 2.1f, 0.8f,   0.0f, 1.0f,
 
 	/* Back Side */
-	-4.9f, 2.9f, 0.0f,
-	-4.9f, 2.9f, 0.8f,
-	-4.1f, 2.9f, 0.0f,
-	-4.1f, 2.9f, 0.0f,
-	-4.1f, 2.9f, 0.8f,
-	-4.9f, 2.9f, 0.8f,
-
+	-4.9f, 2.9f, 0.0f,   0.0f, 0.0f,
+	-4.9f, 2.9f, 0.8f,   0.0f, 1.0f,
+	-4.1f, 2.9f, 0.0f,   1.0f, 0.0f,
+	-4.1f, 2.9f, 0.0f,   1.0f, 0.0f,
+	-4.1f, 2.9f, 0.8f,   1.0f, 1.0f,
+	-4.9f, 2.9f, 0.8f,   0.0f, 1.0f,
 
 	/* Left Side */
-	-4.9f, 2.1f, 0.0f,
-	-4.9f, 2.9f, 0.0f,
-	-4.9f, 2.9f, 0.8f,
-	-4.9f, 2.9f, 0.8f,
-	-4.9f, 2.1f, 0.8f,
-	-4.9f, 2.1f, 0.0f,
-
+	-4.9f, 2.1f, 0.0f,   0.0f, 0.0f,
+	-4.9f, 2.9f, 0.0f,   0.0f, 1.0f,
+	-4.9f, 2.9f, 0.8f,   1.0f, 0.0f,
+	-4.9f, 2.9f, 0.8f,   1.0f, 0.0f,
+	-4.9f, 2.1f, 0.8f,   0.0f, 0.0f,
+	-4.9f, 2.1f, 0.0f,   0.0f, 0.0f,
 
 	/* Right Side */
-	-4.1f, 2.1f, 0.0f,
-	-4.1f, 2.9f, 0.0f,
-	-4.1f, 2.9f, 0.8f,
-	-4.1f, 2.9f, 0.8f,
-	-4.1f, 2.1f, 0.8f,
-	-4.1f, 2.1f, 0.0f,
+	-4.1f, 2.1f, 0.0f,   0.0f, 0.0f,
+	-4.1f, 2.9f, 0.0f,   0.0f, 1.0f,
+	-4.1f, 2.9f, 0.8f,   1.0f, 0.0f,
+	-4.1f, 2.9f, 0.8f,   1.0f, 0.0f,
+	-4.1f, 2.1f, 0.8f,   0.0f, 0.0f,
+	-4.1f, 2.1f, 0.0f,   0.0f, 0.0f,
 };
 
 static int treasure_pos[2] = { 2, 0 }; // [0] is for y and [1] is for x
@@ -232,35 +227,31 @@ void updateTreasurePos(double newY, double newX) {
 	treasure_pos[1] = newX;
 }
 
-//------------------------------------------------
-
 // For the texture
-void loadTexture() {
-	GLuint texture;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	// Hardcoded texture file path
-	const char* texturePath = "coins.jpg";  // Adjust the path as needed
-
-	// Load the image
+GLuint loadTexture(const char* filename) {
+	GLuint textureID;
 	int width, height, nrChannels;
-	unsigned char* data = stbi_load(texturePath, &width, &height, &nrChannels, 0);
+	unsigned char* data = stbi_load(filename, &width, &height, &nrChannels, 0);
+
 	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		glGenTextures(1, &textureID); // Generate textureID
+		glBindTexture(GL_TEXTURE_2D, textureID); // Bind texture
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data); // Set image data
+
+		// Set texture parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		stbi_image_free(data); // Free the loaded image memory
 	}
 	else {
-		std::cout << "Failed to load texture at " << texturePath << std::endl;
+		std::cerr << "Failed to load texture" << std::endl;
 	}
-	stbi_image_free(data);
 
-	// Set texture parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // Horizontal wrap
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); // Vertical wrap
+	return textureID;
 }
+
+//------------------------------------------------
 
 /* FOR THE CAMERA */
 glm::mat4 ViewMatrix;
@@ -452,12 +443,6 @@ static void initColors() {
 		player_color[i] = 1.0f;
 		player_color[i + 1] = 1.0f;
 		player_color[i + 2] = 0.0f;
-	}
-
-	for (int i = 0; i < (RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM); i += 3) {
-		treasure_color[i] = 0.0f;
-		treasure_color[i + 1] = 1.0f;
-		treasure_color[i + 2] = 0.0f;
 	}
 }
 
@@ -832,12 +817,6 @@ int main(void)
 	glBindBuffer(GL_ARRAY_BUFFER, treasurebuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(treasure), treasure, GL_STATIC_DRAW);
 
-	GLuint treasureColorBuffer;
-	glGenBuffers(1, &treasureColorBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, treasureColorBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(treasure_color), treasure_color, GL_STATIC_DRAW);
-
-	loadTexture();
 
 	do {
 
@@ -846,6 +825,8 @@ int main(void)
 
 		// Use our shader
 		glUseProgram(programID);
+
+		glUniform1i(glGetUniformLocation(programID, "textureSampler"), 0);
 
 		camera_function();
 
@@ -886,7 +867,6 @@ int main(void)
 
 		// For the player
 		glBindBuffer(GL_ARRAY_BUFFER, playerbuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(player), player, GL_STATIC_DRAW);
 		glVertexAttribPointer(
 			0,
 			3,
@@ -911,28 +891,20 @@ int main(void)
 		glDrawArrays(GL_TRIANGLES, 0, RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM);
 
 
-		// For the treasure
-		glBindBuffer(GL_ARRAY_BUFFER, treasurebuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(treasure), treasure, GL_STATIC_DRAW);
-		glVertexAttribPointer(
-			0,
-			3,
-			GL_FLOAT,
-			GL_FALSE,
-			0,
-			(void*)0
-		);
 
-		// For the color of the treasure
-		glBindBuffer(GL_ARRAY_BUFFER, treasureColorBuffer);
-		glVertexAttribPointer(
-			1,
-			3,
-			GL_FLOAT,
-			GL_FALSE,
-			0,
-			(void*)0
-		);
+		// THIS NEEDS SOME WORK 
+		// For the treasure
+
+		GLuint treasureTextureID = loadTexture("coins.jpg");
+		glBindTexture(GL_TEXTURE_2D, treasureTextureID);  // Bind the texture
+
+		// Enable and bind position data (index 0)
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)0);
+
+		// Enable and bind texture coordinate data (index 1)
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 
 		// Draw treasure
 		glDrawArrays(GL_TRIANGLES, 0, RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM);
@@ -957,6 +929,8 @@ int main(void)
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
+		glDisableVertexAttribArray(2);
+
 
 		// Swap buffers
 		glfwSwapBuffers(window);
@@ -972,7 +946,6 @@ int main(void)
 	glDeleteBuffers(1, &playerbuffer);
 	glDeleteBuffers(1, &playerColorBuffer);
 	glDeleteBuffers(1, &treasurebuffer);
-	glDeleteBuffers(1, &treasureColorBuffer);
 
 
 	glDeleteVertexArrays(1, &VertexArrayID);

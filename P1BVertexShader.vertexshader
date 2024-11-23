@@ -1,14 +1,16 @@
 #version 330 core
 
-layout(location = 0) in vec3 vertexPosition_modelspace;
-layout(location = 1) in vec4 vertexColor;
+layout(location = 0) in vec3 vertexPosition_modelspace; // Vertex position
+layout(location = 1) in vec4 vertexColor;               // Vertex color
+layout(location = 2) in vec2 vertexTexCoord;            // Texture coordinates
 
-out vec4 fragmentColor;
+out vec4 fragmentColor;                                 // Color passed to fragment shader
+out vec2 TexCoords;                                     // Texture coordinates passed to fragment shader
 
 uniform mat4 MVP;
 
-void main(){
-
-        gl_Position =  MVP * vec4(vertexPosition_modelspace,1);
-	fragmentColor = vertexColor;
+void main() {
+    gl_Position = MVP * vec4(vertexPosition_modelspace, 1.0); // Apply MVP transformation
+    fragmentColor = vertexColor; // Pass color to fragment shader
+    TexCoords = vertexTexCoord; // Pass texture coordinates to fragment shader
 }
