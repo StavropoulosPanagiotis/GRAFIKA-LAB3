@@ -27,8 +27,13 @@ GLFWwindow* window;
 // Include GLM
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 using namespace glm;
 using namespace std;
+
 
 #define RECT_VERTICES_NUM 6 // How many vertices are in each rectangle
 #define SIDE_NUM 6 // How many sides we have in a single cube
@@ -229,6 +234,33 @@ void updateTreasurePos(double newY, double newX) {
 
 //------------------------------------------------
 
+// For the texture
+void loadTexture() {
+	GLuint texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	// Hardcoded texture file path
+	const char* texturePath = "coins.jpg";  // Adjust the path as needed
+
+	// Load the image
+	int width, height, nrChannels;
+	unsigned char* data = stbi_load(texturePath, &width, &height, &nrChannels, 0);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else {
+		std::cout << "Failed to load texture at " << texturePath << std::endl;
+	}
+	stbi_image_free(data);
+
+	// Set texture parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // Horizontal wrap
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); // Vertical wrap
+}
 
 /* FOR THE CAMERA */
 glm::mat4 ViewMatrix;
@@ -735,8 +767,6 @@ int main(void)
 
 	// 950x950 window with it's name
 	window = glfwCreateWindow(950, 950, u8"Άσκηση 1Γ - 2024", NULL, NULL);
-
-
 	if (window == NULL) {
 		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
 		getchar();
@@ -760,6 +790,7 @@ int main(void)
 	// background color (black)
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glEnable(GL_DEPTH_TEST);
+
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
@@ -767,13 +798,13 @@ int main(void)
 	// Create and compile our GLSL program from the shaders
 
 	GLuint programID = LoadShaders("P1BVertexShader.vertexshader", "P1BFragmentShader.fragmentshader");
-
 	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
-
-	GLfloat len = 5.0f, wid = 2.5f, heig = 2.5f;
 
 	// Initialize maze
 	initMaze();
+
+	// Initialize the availableTreasurePos array
+	initAvailableTreasurePos();
 
 	/* All the buffers we are going to need */
 	GLuint mazebuffer;
@@ -805,6 +836,8 @@ int main(void)
 	glGenBuffers(1, &treasureColorBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, treasureColorBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(treasure_color), treasure_color, GL_STATIC_DRAW);
+
+	loadTexture();
 
 	do {
 
@@ -904,8 +937,6 @@ int main(void)
 		// Draw treasure
 		glDrawArrays(GL_TRIANGLES, 0, RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM);
 
-		// Initialize the availableTreasurePos array
-		initAvailableTreasurePos();
 
 		// For the random spawn of the treasure
 		static double lastTime = 0.0;
