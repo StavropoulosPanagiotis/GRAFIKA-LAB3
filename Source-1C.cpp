@@ -330,91 +330,56 @@ glm::mat4 getProjectionMatrix() {
 	return ProjectionMatrix;
 }
 
-// Initial position : on +Z
-glm::vec3 position = glm::vec3(0, 0, 5);
-// Initial horizontal angle : toward -Z
-float horizontalAngle = 3.14f;
-// Initial vertical angle : none
-float verticalAngle = 0.0f;
-// Initial Field of View
-float initialFoV = 45.0f;
-
-float speed = 3.0f; // 3 units / second
+// Field Of View
+float FOV = 60.0f;
+// Initial position
+glm::vec3 position = glm::vec3(0, 0, 20.0);
+// Where is camera looking
+glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.25f);
+// Up vector
+glm::vec3 cameraUp = glm::vec3(0.0, 1.0, 0.0);
 
 void camera_function()
 {
-	// glfwGetTime is called only once, the first time this function is called
+	float speed = 5.0f; // 5 units per second
+
 	static double lastTime = glfwGetTime();
 
 	// Compute time difference between current and last frame
 	double currentTime = glfwGetTime();
 	float deltaTime = float(currentTime - lastTime);
 
-	// Turn right with w
-	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS) {
-		horizontalAngle += deltaTime * speed;
-	}
-	// Turn left with x
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		horizontalAngle -= deltaTime * speed;
-	}
-	// Look up with q
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-		verticalAngle += deltaTime * speed;
-	}
-	// Look down with z
-	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS) {
-		verticalAngle -= deltaTime * speed;
-	}
-	// Zoom in with Up arrow
+	// Move forward with UP arrow
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-		position += glm::vec3(0.0f, 0.0f, -1.0f) * deltaTime * speed;
+		position -= glm::vec3(0.0f, 0.0f, 1.0f) * deltaTime * speed;
 	}
-	// Zoom out with Down arrow
+	// Move backward with DOWN arrow
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
 		position += glm::vec3(0.0f, 0.0f, 1.0f) * deltaTime * speed;
 	}
-
-	glm::vec3 direction(
-		cos(verticalAngle) * sin(horizontalAngle),
-		sin(verticalAngle),
-		cos(verticalAngle) * cos(horizontalAngle)
-	);
-
-	// Right vector
-	glm::vec3 right = glm::vec3(
-		sin(horizontalAngle - 3.14f / 2.0f),
-		0,
-		cos(horizontalAngle - 3.14f / 2.0f)
-	);
-
-	// Up vector
-	glm::vec3 up = glm::cross(right, direction);
-
 	// Move right with 'h' (along X-axis)
 	if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS) {
-		position += right * deltaTime * speed;
+		position += glm::vec3(1.0f, 0.0f, 0.0f) * deltaTime * speed;
 	}
 	// Move left with 'g' (along X-axis)
 	if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS) {
-		position -= right * deltaTime * speed;
+		position -= glm::vec3(1.0f, 0.0f, 0.0f) * deltaTime * speed;
 	}
 	// Move up with 't' (along Y-axis)
 	if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS) {
-		position += up * deltaTime * speed;
+		position += glm::vec3(0.0f, 1.0f, 0.0f) * deltaTime * speed;
 	}
 	// Move down with 'b' (along Y-axis)
 	if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS) {
-		position -= up * deltaTime * speed;
+		position -= glm::vec3(0.0f, 1.0f, 0.0f) * deltaTime * speed;
 	}
 
-	// Set the view matrix based on the static position and updated direction
+	// Update the view matrix
 	ViewMatrix = glm::lookAt(
-		position,           // Keep the camera at a fixed position
-		position + direction,  // Update where the camera is looking
-		up                  // Head is up
+		position,           // Camera position
+		cameraTarget,       // Camera target (where it is always looking)
+		cameraUp            // Up direction
 	);
-
 	lastTime = currentTime;
 }
 
@@ -907,7 +872,7 @@ int main(void)
 
 		camera_function();
 
-		glm::mat4 Projection = glm::perspective(glm::radians(100.0f), 4.0f / 4.0f, 0.1f, 100.0f);
+		glm::mat4 Projection = glm::perspective(glm::radians(FOV), 4.0f / 4.0f, 0.1f, 100.0f);
 		// Camera matrix
 		glm::mat4 View = getViewMatrix();
 		glm::mat4 Model = glm::mat4(1.0f);
