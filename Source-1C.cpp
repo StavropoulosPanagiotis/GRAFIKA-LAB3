@@ -322,14 +322,12 @@ GLboolean checkCollision() {
 /* FOR THE CAMERA */
 glm::mat4 ViewMatrix;
 glm::mat4 ProjectionMatrix;
-
 glm::mat4 getViewMatrix() {
 	return ViewMatrix;
 }
 glm::mat4 getProjectionMatrix() {
 	return ProjectionMatrix;
 }
-
 // Field Of View
 float FOV = 60.0f;
 // Initial position
@@ -383,7 +381,7 @@ void camera_function()
 	lastTime = currentTime;
 }
 
-/////////////////////////////////////////////////
+///////////////////////////////////////////////////
 GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path) {
 
 	// Create the shaders
@@ -860,16 +858,17 @@ int main(void)
 	glBindBuffer(GL_ARRAY_BUFFER, treasureUVbuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(treasure_uv_coords), treasure_uv_coords, GL_STATIC_DRAW);
 
+	// Load the texture
 	GLuint textureID = loadTexture("coins.jpg");
 
 	do {
-
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Use our shader
 		glUseProgram(programID);
 
+		// "Call" the camera
 		camera_function();
 
 		glm::mat4 Projection = glm::perspective(glm::radians(FOV), 4.0f / 4.0f, 0.1f, 100.0f);
@@ -880,6 +879,7 @@ int main(void)
 
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
 
+		// For the shaders (in order to apply texture)
 		glUniform1i(glGetUniformLocation(programID, "useTexture"), 0); // 0 = false
 
 		// For the maze 
