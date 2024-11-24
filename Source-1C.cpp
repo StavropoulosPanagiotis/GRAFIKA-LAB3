@@ -359,6 +359,8 @@ void camera_function()
 		position += glm::vec3(0.0f, 0.0f, 1.0f) * deltaTime * speed;
 	}
 
+
+
 	glm::vec3 direction(
 		cos(verticalAngle) * sin(horizontalAngle),
 		sin(verticalAngle),
@@ -374,6 +376,23 @@ void camera_function()
 
 	// Up vector
 	glm::vec3 up = glm::cross(right, direction);
+
+	// Move right with 'g' (along X-axis)
+	if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS) {
+		position += right * deltaTime * speed;
+	}
+	// Move left with 'h' (along X-axis)
+	if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS) {
+		position -= right * deltaTime * speed;
+	}
+	// Move up with 't' (along Y-axis)
+	if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS) {
+		position += up * deltaTime * speed;
+	}
+	// Move down with 'b' (along Y-axis)
+	if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS) {
+		position -= up * deltaTime * speed;
+	}
 
 	// Set the view matrix based on the static position and updated direction
 	ViewMatrix = glm::lookAt(
