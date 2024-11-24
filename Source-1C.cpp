@@ -106,9 +106,7 @@ static GLfloat player[] = { // The coordinates of each vertex of each side of th
 	-4.25f, 2.25f, 0.25f
 };
 
-
 static int player_pos[2] = { 2, 0 }; // The initial position of the player in the maze[10][10] array
-
 
 // ---------- FOR THE TREASURE ----------
 // Initial treasure position coordinates(the treasure is a cube with 0.8 length on each side)
@@ -121,7 +119,6 @@ static GLfloat treasure[] = {
 	-4.1f, 2.1f, 0.1f,
 	-4.1f, 2.9f, 0.1f,
 
-
 	/* Top Side */
 	-4.9f, 2.1f, 0.9f,
 	-4.9f, 2.9f, 0.9f,
@@ -129,7 +126,6 @@ static GLfloat treasure[] = {
 	-4.9f, 2.9f, 0.9f,
 	-4.1f, 2.1f, 0.9f,
 	-4.1f, 2.9f, 0.9f,
-
 
 	/* Front Side */
 	-4.9f, 2.1f, 0.1f,
@@ -139,7 +135,6 @@ static GLfloat treasure[] = {
 	-4.1f, 2.1f, 0.9f,
 	-4.9f, 2.1f, 0.9f,
 
-
 	/* Back Side */
 	-4.9f, 2.9f, 0.1f,
 	-4.9f, 2.9f, 0.9f,
@@ -147,7 +142,6 @@ static GLfloat treasure[] = {
 	-4.1f, 2.9f, 0.1f,
 	-4.1f, 2.9f, 0.9f,
 	-4.9f, 2.9f, 0.9f,
-
 
 	/* Left Side */
 	-4.9f, 2.1f, 0.1f,
@@ -157,7 +151,6 @@ static GLfloat treasure[] = {
 	-4.9f, 2.1f, 0.9f,
 	-4.9f, 2.1f, 0.1f,
 
-
 	/* Right Side */
 	-4.1f, 2.1f, 0.1f,
 	-4.1f, 2.9f, 0.1f,
@@ -166,7 +159,6 @@ static GLfloat treasure[] = {
 	-4.1f, 2.1f, 0.9f,
 	-4.1f, 2.1f, 0.1f,
 };
-
 
 // The u-v coordinates of each face of the cube
 static GLfloat treasure_uv_coords[] = {
@@ -307,8 +299,25 @@ GLuint loadTexture(const char* filename) {
 
 	return textureID;
 }
-
 //------------------------------------------------
+
+// Check if player "touched" the treasure
+GLboolean checkCollision() {
+	if ((player_pos[0] == treasure_pos[0]) && (player_pos[1] == treasure_pos[1])) {
+		return true;
+	}
+	return false;
+};
+
+//void makeTreasureSmaller() {
+//	float scaleFactor = 0.5f;
+//
+//	for (int i = 0; i < 18; i += 3) {
+//		treasure[i] *= scaleFactor;
+//		treasure[i + 1] *= scaleFactor;
+//		treasure[i + 2] *= scaleFactor;
+//	}
+//}
 
 /* FOR THE CAMERA */
 glm::mat4 ViewMatrix;
@@ -444,7 +453,6 @@ GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path)
 	GLint Result = GL_FALSE;
 	int InfoLogLength;
 
-
 	// Compile Vertex Shader
 	printf("Compiling shader : %s\n", vertex_file_path);
 	char const* VertexSourcePointer = VertexShaderCode.c_str();
@@ -459,8 +467,6 @@ GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path)
 		glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
 		printf("%s\n", &VertexShaderErrorMessage[0]);
 	}
-
-
 
 	// Compile Fragment Shader
 	printf("Compiling shader : %s\n", fragment_file_path);
@@ -477,8 +483,6 @@ GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path)
 		printf("%s\n", &FragmentShaderErrorMessage[0]);
 	}
 
-
-
 	// Link the program
 	printf("Linking program\n");
 	GLuint ProgramID = glCreateProgram();
@@ -494,7 +498,6 @@ GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path)
 		glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
 		printf("%s\n", &ProgramErrorMessage[0]);
 	}
-
 
 	glDetachShader(ProgramID, VertexShaderID);
 	glDetachShader(ProgramID, FragmentShaderID);
@@ -886,7 +889,6 @@ int main(void)
 	GLuint treasurebuffer;
 	glGenBuffers(1, &treasurebuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, treasurebuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(treasure), treasure, GL_STATIC_DRAW);
 
 	GLuint treasureUVbuffer;
 	glGenBuffers(1, &treasureUVbuffer);
@@ -943,6 +945,30 @@ int main(void)
 		// Draw player
 		glDrawArrays(GL_TRIANGLES, 0, RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM);
 
+		// This is for the first random spawn of the treasure
+		static GLboolean firstSpawn = true;
+		if (firstSpawn) {
+			int randomNumber = generateRandomNumber();
+			findAvailableTreasurePos();
+			int newY = availableTreasurePos[randomNumber][0];
+			int newX = availableTreasurePos[randomNumber][1];
+			updateTreasurePos(newY, newX);
+			firstSpawn = false;
+		}
+
+		// The treasure moves around the maze every 3 seconds
+		static double lastTime = 0.0;
+		double currentTime = glfwGetTime();
+
+		if (currentTime - lastTime >= 3.0) {  // Move every 3 seconds
+			int randomNumber = generateRandomNumber();
+			findAvailableTreasurePos();
+			int newY = availableTreasurePos[randomNumber][0];
+			int newX = availableTreasurePos[randomNumber][1];
+			updateTreasurePos(newY, newX);
+			lastTime = currentTime;
+		}
+
 		// For the treasure
 		glBindBuffer(GL_ARRAY_BUFFER, treasurebuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(treasure), treasure, GL_STATIC_DRAW);
@@ -961,21 +987,6 @@ int main(void)
 
 		glUniform1i(glGetUniformLocation(programID, "myTextureSampler"), 0); // Texture unit 0
 
-		// For the random spawn of the treasure
-		static double lastTime = 0.0;
-		double currentTime = glfwGetTime();
-
-		if (currentTime - lastTime >= 3.0) {  // Move every 3 seconds
-			findAvailableTreasurePos();
-			int randomNumber = generateRandomNumber();
-			int newY = availableTreasurePos[randomNumber][0];
-			int newX = availableTreasurePos[randomNumber][1];
-
-			updateTreasurePos(newY, newX);
-			printf("%d  %d", newY, newX);
-			lastTime = currentTime;
-		}
-
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
@@ -987,14 +998,12 @@ int main(void)
 	} // Check if the SPACE key was pressed or the window was closed
 	while (glfwGetKey(window, GLFW_KEY_SPACE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0);
 
-
 	// Cleanup VBO
 	glDeleteBuffers(1, &mazebuffer);
 	glDeleteBuffers(1, &mazeColorBuffer);
 	glDeleteBuffers(1, &playerbuffer);
 	glDeleteBuffers(1, &playerColorBuffer);
-	//glDeleteBuffers(1, &treasurebuffer);
-
+	glDeleteBuffers(1, &treasurebuffer);
 
 	glDeleteVertexArrays(1, &VertexArrayID);
 	glDeleteProgram(programID);
