@@ -309,15 +309,19 @@ GLboolean checkCollision() {
 	return false;
 };
 
-//void makeTreasureSmaller() {
-//	float scaleFactor = 0.5f;
-//
-//	for (int i = 0; i < 18; i += 3) {
-//		treasure[i] *= scaleFactor;
-//		treasure[i + 1] *= scaleFactor;
-//		treasure[i + 2] *= scaleFactor;
-//	}
-//}
+void makeTreasureSmaller() {
+	float scaleFactor = 0.5f;
+
+	for (int i = 0; i < 18; i += 3) {
+		treasure[i] *= scaleFactor;
+		treasure[i + 1] *= scaleFactor;
+		treasure[i + 2] *= scaleFactor;
+	}
+
+	for (int i = 0; i < 72; i++) {
+		treasure_uv_coords[i] *= 0.5;
+	}
+}
 
 /* FOR THE CAMERA */
 glm::mat4 ViewMatrix;
@@ -932,6 +936,16 @@ int main(void)
 			int newX = availableTreasurePos[randomNumber][1];
 			updateTreasurePos(newY, newX);
 			lastTime = currentTime;
+		}
+
+		// Make the program "sleep" for 2 seconds and then close (if the player touched the treasure)
+		if (checkCollision()) {
+			double startTime = glfwGetTime();
+			while (glfwGetTime() - startTime < 2.0) {
+				makeTreasureSmaller();
+				glfwPollEvents();
+			}
+			glfwSetWindowShouldClose(window, GLFW_TRUE);
 		}
 
 		// For the treasure
