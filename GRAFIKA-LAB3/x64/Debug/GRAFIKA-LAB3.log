@@ -1,9 +1,9 @@
 ﻿  Source-1C.cpp
-C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\Source-1C.cpp(204,46): warning C4244: '+=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\Source-1C.cpp(210,46): warning C4244: '-=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\Source-1C.cpp(216,46): warning C4244: '-=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\Source-1C.cpp(222,47): warning C4244: '+=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\Source-1C.cpp(226,20): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\Source-1C.cpp(227,20): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\Source-1C.cpp(254,46): warning C4244: '+=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\Source-1C.cpp(260,46): warning C4244: '-=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\Source-1C.cpp(266,46): warning C4244: '-=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\Source-1C.cpp(272,47): warning C4244: '+=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\Source-1C.cpp(276,20): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\Source-1C.cpp(277,20): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
 LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   GRAFIKA-LAB3.vcxproj -> C:\Users\Administrator\Desktop\UOI\Grafika\LABS\LAB3\GRAFIKA-LAB3\x64\Debug\GRAFIKA-LAB3.exe

@@ -110,59 +110,109 @@ static int player_pos[2] = { 2, 0 }; // The initial position of the player in th
 
 
 // ---------- FOR THE TREASURE ----------
-
-// Initial treasure coordinates (the treasure is a cube with 0.8 length on each side)
-// Vertices for the treasure (position, texture coordinates)
+// Initial treasure position coordinates(the treasure is a cube with 0.8 length on each side)
 static GLfloat treasure[] = {
 	/* Bottom Side */
-	-4.9f, 2.1f, 0.0f,   0.0f, 0.0f,  // Vertex 1 (position and texture coordinate)
-	-4.9f, 2.9f, 0.0f,   0.0f, 1.0f,  // Vertex 2
-	-4.1f, 2.1f, 0.0f,   1.0f, 0.0f,  // Vertex 3
-	-4.9f, 2.9f, 0.0f,   0.0f, 1.0f,  // Vertex 4
-	-4.1f, 2.1f, 0.0f,   1.0f, 0.0f,  // Vertex 5
-	-4.1f, 2.9f, 0.0f,   1.0f, 1.0f,  // Vertex 6
+	-4.9f, 2.1f, 0.0f,
+	-4.1f, 2.1f, 0.0f,
+	-4.9f, 2.9f, 0.0f,
+	-4.9f, 2.9f, 0.0f,
+	-4.1f, 2.1f, 0.0f,
+	-4.1f, 2.9f, 0.0f,
 
 	/* Top Side */
-	-4.9f, 2.1f, 0.8f,   0.0f, 0.0f,
-	-4.9f, 2.9f, 0.8f,   0.0f, 1.0f,
-	-4.1f, 2.1f, 0.8f,   1.0f, 0.0f,
-	-4.9f, 2.9f, 0.8f,   0.0f, 1.0f,
-	-4.1f, 2.1f, 0.8f,   1.0f, 0.0f,
-	-4.1f, 2.9f, 0.8f,   1.0f, 1.0f,
+	-4.9f, 2.1f, 0.8f,
+	-4.1f, 2.1f, 0.8f,
+	-4.9f, 2.9f, 0.8f,
+	-4.9f, 2.9f, 0.8f,
+	-4.1f, 2.1f, 0.8f,
+	-4.1f, 2.9f, 0.8f,
 
 	/* Front Side */
-	-4.9f, 2.1f, 0.0f,   0.0f, 0.0f,
-	-4.9f, 2.1f, 0.8f,   0.0f, 1.0f,
-	-4.1f, 2.1f, 0.0f,   1.0f, 0.0f,
-	-4.1f, 2.1f, 0.0f,   1.0f, 0.0f,
-	-4.1f, 2.1f, 0.8f,   1.0f, 1.0f,
-	-4.9f, 2.1f, 0.8f,   0.0f, 1.0f,
+	-4.9f, 2.1f, 0.0f,
+	-4.9f, 2.1f, 0.8f,
+	-4.1f, 2.1f, 0.0f,
+	-4.1f, 2.1f, 0.0f,
+	-4.9f, 2.1f, 0.8f,
+	-4.1f, 2.1f, 0.8f,
 
 	/* Back Side */
-	-4.9f, 2.9f, 0.0f,   0.0f, 0.0f,
-	-4.9f, 2.9f, 0.8f,   0.0f, 1.0f,
-	-4.1f, 2.9f, 0.0f,   1.0f, 0.0f,
-	-4.1f, 2.9f, 0.0f,   1.0f, 0.0f,
-	-4.1f, 2.9f, 0.8f,   1.0f, 1.0f,
-	-4.9f, 2.9f, 0.8f,   0.0f, 1.0f,
+	-4.9f, 2.9f, 0.0f,
+	-4.9f, 2.9f, 0.8f,
+	-4.1f, 2.9f, 0.0f,
+	-4.1f, 2.9f, 0.0f,
+	-4.9f, 2.9f, 0.8f,
+	-4.1f, 2.9f, 0.8f,
 
 	/* Left Side */
-	-4.9f, 2.1f, 0.0f,   0.0f, 0.0f,
-	-4.9f, 2.9f, 0.0f,   0.0f, 1.0f,
-	-4.9f, 2.9f, 0.8f,   1.0f, 0.0f,
-	-4.9f, 2.9f, 0.8f,   1.0f, 0.0f,
-	-4.9f, 2.1f, 0.8f,   0.0f, 0.0f,
-	-4.9f, 2.1f, 0.0f,   0.0f, 0.0f,
+	-4.9f, 2.1f, 0.0f,
+	-4.9f, 2.9f, 0.0f,
+	-4.9f, 2.1f, 0.8f,
+	-4.9f, 2.1f, 0.8f,
+	-4.9f, 2.9f, 0.0f,
+	-4.9f, 2.9f, 0.8f,
 
 	/* Right Side */
-	-4.1f, 2.1f, 0.0f,   0.0f, 0.0f,
-	-4.1f, 2.9f, 0.0f,   0.0f, 1.0f,
-	-4.1f, 2.9f, 0.8f,   1.0f, 0.0f,
-	-4.1f, 2.9f, 0.8f,   1.0f, 0.0f,
-	-4.1f, 2.1f, 0.8f,   0.0f, 0.0f,
-	-4.1f, 2.1f, 0.0f,   0.0f, 0.0f,
+	-4.1f, 2.1f, 0.0f,
+	-4.1f, 2.9f, 0.0f,
+	-4.1f, 2.1f, 0.8f,
+	-4.1f, 2.1f, 0.8f,   
+	-4.1f, 2.9f, 0.0f,   
+	-4.1f, 2.9f, 0.8f 
 };
 
+// The u-v coordinates of each face of the cube
+static GLfloat treasure_uv_coords[] = {
+	// Bottom side
+	0.0f, 0.0f,
+	1.0f, 0.0f,
+	0.0f, 1.0f,
+	0.0f, 1.0f,
+	1.0f, 0.0f,
+	1.0f, 1.0f,
+
+	// Top side
+	0.0f, 0.0f,
+	1.0f, 0.0f,
+	0.0f, 1.0f,
+	0.0f, 1.0f,
+	1.0f, 0.0f,
+	1.0f, 1.0f,
+
+	// Front side
+	0.0f, 0.0f,
+	1.0f, 0.0f,
+	0.0f, 1.0f,
+	0.0f, 1.0f,
+	1.0f, 0.0f,
+	1.0f, 1.0f,
+
+	// Back side
+	0.0f, 0.0f,
+	1.0f, 0.0f,
+	0.0f, 1.0f,
+	0.0f, 1.0f,
+	1.0f, 0.0f,
+	1.0f, 1.0f,
+
+	// Left side
+	0.0f, 0.0f,
+	1.0f, 0.0f,
+	0.0f, 1.0f,
+	0.0f, 1.0f,
+	1.0f, 0.0f,
+	1.0f, 1.0f,
+
+	// Right side
+	0.0f, 0.0f,
+	1.0f, 0.0f,
+	0.0f, 1.0f,
+	0.0f, 1.0f,
+	1.0f, 0.0f,
+	1.0f, 1.0f
+};
+
+//Initial position of the cube in relation to the maze
 static int treasure_pos[2] = { 2, 0 }; // [0] is for y and [1] is for x
 
 // 44 available "pairs" (x, y) for the treasure to spawn (in relation to maze[10][10])
@@ -615,7 +665,6 @@ static void initMaze() {
 	initColors();
 }
 
-
 bool isMoveValid(int key) {
 	int maze_walls_vertices_size = (55 * 3 * 3 * 2);
 
@@ -734,7 +783,6 @@ void movePlayer(GLFWwindow* window, int key, int scancode, int action, int mods)
 	}
 }
 
-
 int main(void)
 {
 	if (!glfwInit())
@@ -781,7 +829,6 @@ int main(void)
 	glBindVertexArray(VertexArrayID);
 
 	// Create and compile our GLSL program from the shaders
-
 	GLuint programID = LoadShaders("P1BVertexShader.vertexshader", "P1BFragmentShader.fragmentshader");
 	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
 
@@ -817,6 +864,12 @@ int main(void)
 	glBindBuffer(GL_ARRAY_BUFFER, treasurebuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(treasure), treasure, GL_STATIC_DRAW);
 
+	GLuint treasureUVbuffer;
+	glGenBuffers(1, &treasureUVbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, treasureUVbuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(treasure_uv_coords), treasure_uv_coords, GL_STATIC_DRAW);
+
+	GLuint textureID = loadTexture("coins.jpg");
 
 	do {
 
@@ -825,8 +878,6 @@ int main(void)
 
 		// Use our shader
 		glUseProgram(programID);
-
-		glUniform1i(glGetUniformLocation(programID, "textureSampler"), 0);
 
 		camera_function();
 
@@ -838,77 +889,53 @@ int main(void)
 
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
 
+		glUniform1i(glGetUniformLocation(programID, "useTexture"), 0); // 0 = false
+
 		// For the maze 
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, mazebuffer);
-		glVertexAttribPointer(
-			0,                  // attribute
-			3,                  // size
-			GL_FLOAT,           // type
-			GL_FALSE,           // normalized?
-			0,                  // stride
-			(void*)0            // array buffer offset           
-		);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
 		// For the color of the maze
 		glEnableVertexAttribArray(1);
 		glBindBuffer(GL_ARRAY_BUFFER, mazeColorBuffer);
-		glVertexAttribPointer(
-			1,
-			3,
-			GL_FLOAT,
-			GL_FALSE,
-			0,
-			(void*)0
-		);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
 		// Draw maze
 		glDrawArrays(GL_TRIANGLES, 0, 55 * RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM);
 
+		// For the movement of the player
+		glfwSetKeyCallback(window, movePlayer);
+
 		// For the player
 		glBindBuffer(GL_ARRAY_BUFFER, playerbuffer);
-		glVertexAttribPointer(
-			0,
-			3,
-			GL_FLOAT,
-			GL_FALSE,
-			0,
-			(void*)0
-		);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(player), player, GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
 		// For the color of the player
 		glBindBuffer(GL_ARRAY_BUFFER, playerColorBuffer);
-		glVertexAttribPointer(
-			1,
-			3,
-			GL_FLOAT,
-			GL_FALSE,
-			0,
-			(void*)0
-		);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
 		// Draw player
 		glDrawArrays(GL_TRIANGLES, 0, RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM);
 
-
-
-		// THIS NEEDS SOME WORK 
 		// For the treasure
+		glBindBuffer(GL_ARRAY_BUFFER, treasurebuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(treasure), treasure, GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-		GLuint treasureTextureID = loadTexture("coins.jpg");
-		glBindTexture(GL_TEXTURE_2D, treasureTextureID);  // Bind the texture
+		// For the texture of the treasure
+		glUniform1i(glGetUniformLocation(programID, "useTexture"), 1); // 1 = true
+		glActiveTexture(GL_TEXTURE0);
 
-		// Enable and bind position data (index 0)
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)0);
-
-		// Enable and bind texture coordinate data (index 1)
 		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
+		glBindBuffer(GL_ARRAY_BUFFER, treasureUVbuffer);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-		// Draw treasure
+		//Draw the treasure
 		glDrawArrays(GL_TRIANGLES, 0, RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM);
 
+		glUniform1i(glGetUniformLocation(programID, "myTextureSampler"), 0); // Texture unit 0
 
 		// For the random spawn of the treasure
 		static double lastTime = 0.0;
@@ -921,16 +948,13 @@ int main(void)
 			int newX = availableTreasurePos[randomNumber][1];
 
 			updateTreasurePos(newY, newX);
+			printf("%d  %d", newY, newX);
 			lastTime = currentTime;
 		}
-
-		// For the movement of the player
-		glfwSetKeyCallback(window, movePlayer);
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
-
 
 		// Swap buffers
 		glfwSwapBuffers(window);
@@ -945,7 +969,7 @@ int main(void)
 	glDeleteBuffers(1, &mazeColorBuffer);
 	glDeleteBuffers(1, &playerbuffer);
 	glDeleteBuffers(1, &playerColorBuffer);
-	glDeleteBuffers(1, &treasurebuffer);
+	//glDeleteBuffers(1, &treasurebuffer);
 
 
 	glDeleteVertexArrays(1, &VertexArrayID);

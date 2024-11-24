@@ -1,16 +1,17 @@
 #version 330 core
+in vec3 fragmentColor;
+in vec2 UV;
 
-in vec4 fragmentColor;  // Color from vertex shader
-in vec2 TexCoords;      // Texture coordinates from vertex shader
+out vec3 color;
 
-out vec4 color;         // Final output color
+uniform sampler2D myTextureSampler;
+uniform bool useTexture; // Flag to determine if we use the texture
 
-uniform sampler2D textureSampler; // Texture sampler
-
-void main() {
-    // Sample the texture using the texture coordinates
-    vec4 textureColor = texture(textureSampler, TexCoords);
-
-    // Combine the texture color and vertex color (you can adjust this as needed)
-    color = textureColor * fragmentColor;  // Modulate texture color with vertex color
+void main()
+{
+    if (useTexture) {
+        color = texture(myTextureSampler, UV).rgb; // Use texture color
+    } else {
+        color = fragmentColor; // Use vertex color for plain objects
+    }
 }
