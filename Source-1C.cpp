@@ -58,53 +58,54 @@ static int maze[10][10] = { // The layout of the maze, 1 represents a "wall" and
 static GLfloat player_color[RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM]; // The array that will hold the color values of each vertex of the player (a single cube)
 static GLfloat player[] = { // The coordinates of each vertex of each side of the player (a single cube)
 	/* Bottom Side */
-	-4.75f, 2.25f, 0.0f,
-	-4.75f, 2.75f, 0.0f,
-	-4.25f, 2.25f, 0.0f,
-	-4.75f, 2.75f, 0.0f,
-	-4.25f, 2.25f, 0.0f,
-	-4.25f, 2.75f, 0.0f,
+	-4.75f, 2.25f, 0.25f,
+	-4.75f, 2.75f, 0.25f,
+	-4.25f, 2.25f, 0.25f,
+	-4.75f, 2.75f, 0.25f,
+	-4.25f, 2.25f, 0.25f,
+	-4.25f, 2.75f, 0.25f,
 
 	/* Top Side */
-	-4.75f, 2.25f, 0.5f,
-	-4.75f, 2.75f, 0.5f,
-	-4.25f, 2.25f, 0.5f,
-	-4.75f, 2.75f, 0.5f,
-	-4.25f, 2.25f, 0.5f,
-	-4.25f, 2.75f, 0.5f,
+	-4.75f, 2.25f, 0.75f,
+	-4.75f, 2.75f, 0.75f,
+	-4.25f, 2.25f, 0.75f,
+	-4.75f, 2.75f, 0.75f,
+	-4.25f, 2.25f, 0.75f,
+	-4.25f, 2.75f, 0.75f,
 
 	/* Front Side */
-	-4.75f, 2.25f, 0.0f,
-	-4.75f, 2.25f, 0.5f,
-	-4.25f, 2.25f, 0.0f,
-	-4.25f, 2.25f, 0.0f,
-	-4.25f, 2.25f, 0.5f,
-	-4.75f, 2.25f, 0.5f,
+	-4.75f, 2.25f, 0.25f,
+	-4.75f, 2.25f, 0.75f,
+	-4.25f, 2.25f, 0.25f,
+	-4.25f, 2.25f, 0.25f,
+	-4.25f, 2.25f, 0.75f,
+	-4.75f, 2.25f, 0.75f,
 
 	/* Back Side */
-	-4.75f, 2.75f, 0.0f,
-	-4.75f, 2.75f, 0.5f,
-	-4.25f, 2.75f, 0.0f,
-	-4.25f, 2.75f, 0.0f,
-	-4.25f, 2.75f, 0.5f,
-	-4.75f, 2.75f, 0.5f,
+	-4.75f, 2.75f, 0.25f,
+	-4.75f, 2.75f, 0.75f,
+	-4.25f, 2.75f, 0.25f,
+	-4.25f, 2.75f, 0.25f,
+	-4.25f, 2.75f, 0.75f,
+	-4.75f, 2.75f, 0.75f,
 
 	/* Left Side */
-	-4.75f, 2.25f, 0.0f,
-	-4.75f, 2.75f, 0.0f,
-	-4.75f, 2.75f, 0.5f,
-	-4.75f, 2.75f, 0.5f,
-	-4.75f, 2.25f, 0.5f,
-	-4.75f, 2.25f, 0.0f,
+	-4.75f, 2.25f, 0.25f,
+	-4.75f, 2.75f, 0.25f,
+	-4.75f, 2.75f, 0.75f,
+	-4.75f, 2.75f, 0.75f,
+	-4.75f, 2.25f, 0.75f,
+	-4.75f, 2.25f, 0.25f,
 
 	/* Right Side */
-	-4.25f, 2.25f, 0.0f,
-	-4.25f, 2.75f, 0.0f,
-	-4.25f, 2.75f, 0.5f,
-	-4.25f, 2.75f, 0.5f,
-	-4.25f, 2.25f, 0.5f,
-	-4.25f, 2.25f, 0.0f
+	-4.25f, 2.25f, 0.25f,
+	-4.25f, 2.75f, 0.25f,
+	-4.25f, 2.75f, 0.75f,
+	-4.25f, 2.75f, 0.75f,
+	-4.25f, 2.25f, 0.75f,
+	-4.25f, 2.25f, 0.25f
 };
+
 
 static int player_pos[2] = { 2, 0 }; // The initial position of the player in the maze[10][10] array
 
@@ -113,53 +114,59 @@ static int player_pos[2] = { 2, 0 }; // The initial position of the player in th
 // Initial treasure position coordinates(the treasure is a cube with 0.8 length on each side)
 static GLfloat treasure[] = {
 	/* Bottom Side */
-	-4.9f, 2.1f, 0.0f,
-	-4.1f, 2.1f, 0.0f,
-	-4.9f, 2.9f, 0.0f,
-	-4.9f, 2.9f, 0.0f,
-	-4.1f, 2.1f, 0.0f,
-	-4.1f, 2.9f, 0.0f,
+	-4.9f, 2.1f, 0.1f,
+	-4.9f, 2.9f, 0.1f,
+	-4.1f, 2.1f, 0.1f,
+	-4.9f, 2.9f, 0.1f,
+	-4.1f, 2.1f, 0.1f,
+	-4.1f, 2.9f, 0.1f,
+
 
 	/* Top Side */
-	-4.9f, 2.1f, 0.8f,
-	-4.1f, 2.1f, 0.8f,
-	-4.9f, 2.9f, 0.8f,
-	-4.9f, 2.9f, 0.8f,
-	-4.1f, 2.1f, 0.8f,
-	-4.1f, 2.9f, 0.8f,
+	-4.9f, 2.1f, 0.9f,
+	-4.9f, 2.9f, 0.9f,
+	-4.1f, 2.1f, 0.9f,
+	-4.9f, 2.9f, 0.9f,
+	-4.1f, 2.1f, 0.9f,
+	-4.1f, 2.9f, 0.9f,
+
 
 	/* Front Side */
-	-4.9f, 2.1f, 0.0f,
-	-4.9f, 2.1f, 0.8f,
-	-4.1f, 2.1f, 0.0f,
-	-4.1f, 2.1f, 0.0f,
-	-4.9f, 2.1f, 0.8f,
-	-4.1f, 2.1f, 0.8f,
+	-4.9f, 2.1f, 0.1f,
+	-4.9f, 2.1f, 0.9f,
+	-4.1f, 2.1f, 0.1f,
+	-4.1f, 2.1f, 0.1f,
+	-4.1f, 2.1f, 0.9f,
+	-4.9f, 2.1f, 0.9f,
+
 
 	/* Back Side */
-	-4.9f, 2.9f, 0.0f,
-	-4.9f, 2.9f, 0.8f,
-	-4.1f, 2.9f, 0.0f,
-	-4.1f, 2.9f, 0.0f,
-	-4.9f, 2.9f, 0.8f,
-	-4.1f, 2.9f, 0.8f,
+	-4.9f, 2.9f, 0.1f,
+	-4.9f, 2.9f, 0.9f,
+	-4.1f, 2.9f, 0.1f,
+	-4.1f, 2.9f, 0.1f,
+	-4.1f, 2.9f, 0.9f,
+	-4.9f, 2.9f, 0.9f,
+
 
 	/* Left Side */
-	-4.9f, 2.1f, 0.0f,
-	-4.9f, 2.9f, 0.0f,
-	-4.9f, 2.1f, 0.8f,
-	-4.9f, 2.1f, 0.8f,
-	-4.9f, 2.9f, 0.0f,
-	-4.9f, 2.9f, 0.8f,
+	-4.9f, 2.1f, 0.1f,
+	-4.9f, 2.9f, 0.1f,
+	-4.9f, 2.9f, 0.9f,
+	-4.9f, 2.9f, 0.9f,
+	-4.9f, 2.1f, 0.9f,
+	-4.9f, 2.1f, 0.1f,
+
 
 	/* Right Side */
-	-4.1f, 2.1f, 0.0f,
-	-4.1f, 2.9f, 0.0f,
-	-4.1f, 2.1f, 0.8f,
-	-4.1f, 2.1f, 0.8f,   
-	-4.1f, 2.9f, 0.0f,   
-	-4.1f, 2.9f, 0.8f 
+	-4.1f, 2.1f, 0.1f,
+	-4.1f, 2.9f, 0.1f,
+	-4.1f, 2.9f, 0.9f,
+	-4.1f, 2.9f, 0.9f,
+	-4.1f, 2.1f, 0.9f,
+	-4.1f, 2.1f, 0.1f,
 };
+
 
 // The u-v coordinates of each face of the cube
 static GLfloat treasure_uv_coords[] = {
@@ -217,7 +224,7 @@ static int treasure_pos[2] = { 2, 0 }; // [0] is for y and [1] is for x
 
 // 44 available "pairs" (x, y) for the treasure to spawn (in relation to maze[10][10])
 static int availableTreasurePos[44][2];
-	
+
 // Initialize values to -1
 void initAvailableTreasurePos() {
 	for (int i = 0; i < 44; i++) {
@@ -251,19 +258,19 @@ int generateRandomNumber() {
 void updateTreasurePos(double newY, double newX) {
 	if (newY < treasure_pos[0]) { //This means we are going up
 		for (int i = 1; i < (36 * 3); i += 3) {
-			treasure[i] += abs(newY - treasure_pos[0])*1.0f;
+			treasure[i] += abs(newY - treasure_pos[0]) * 1.0f;
 		}
 	}
 
 	if (newY > treasure_pos[0]) { //This means we are going down
 		for (int i = 1; i < (36 * 3); i += 3) {
-			treasure[i] -= abs(newY - treasure_pos[0])*1.0f;
+			treasure[i] -= abs(newY - treasure_pos[0]) * 1.0f;
 		}
 	}
 
 	if (newX < treasure_pos[1]) { //This means we are going to the left
 		for (int i = 0; i < (36 * 3); i += 3) {
-			treasure[i] -= abs(newX - treasure_pos[1])*1.0f;
+			treasure[i] -= abs(newX - treasure_pos[1]) * 1.0f;
 		}
 	}
 
