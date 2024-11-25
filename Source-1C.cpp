@@ -363,6 +363,7 @@ GLboolean checkCollision() {
 	return false;
 };
 
+// Shrink treasure to half it's size
 void makeTreasureSmaller() {
 	for (int i = 0; i < 108; i++) {
 		treasure[i] = treasureOnCol[i];
@@ -962,7 +963,7 @@ int main(void)
 			glDrawArrays(GL_TRIANGLES, 0, RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM);
 		}
 		else {
-			// Clear the player buffer when not visible
+			// Clear the player buffer when collision occurs
 			glBindBuffer(GL_ARRAY_BUFFER, playerbuffer);
 			glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_STATIC_DRAW); // Clear the buffer
 
@@ -999,7 +1000,7 @@ int main(void)
 				updateTreasurePos(newY, newX);
 				lastTime = currentTime;
 			}
-		}else { // Player touched the treasure, make it small, let the user see it and the dissapear
+		} else { // Player touched the treasure, make it small, let the user see it and then dissapear
 			static double lastTime2 = glfwGetTime();
 			double currentTime2 = glfwGetTime();
 			if (currentTime2 - lastTime2 >= 2.0) {  // After 2 seconds
