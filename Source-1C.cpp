@@ -211,6 +211,56 @@ static GLfloat treasure_uv_coords[] = {
 	1.0f, 1.0f
 };
 
+static GLfloat treasureOnCol[] = {
+	/* Bottom Side */
+	-4.7f, 2.3f, 0.3f,
+	-4.7f, 2.7f, 0.3f,
+	-4.3f, 2.3f, 0.3f,
+	-4.7f, 2.7f, 0.3f,
+	-4.3f, 2.3f, 0.3f,
+	-4.3f, 2.7f, 0.3f,
+
+	/* Top Side */
+	-4.7f, 2.3f, 0.7f,
+	-4.7f, 2.7f, 0.7f,
+	-4.3f, 2.3f, 0.7f,
+	-4.7f, 2.7f, 0.7f,
+	-4.3f, 2.3f, 0.7f,
+	-4.3f, 2.7f, 0.7f,
+
+	/* Front Side */
+	-4.7f, 2.3f, 0.3f,
+	-4.7f, 2.3f, 0.7f,
+	-4.3f, 2.3f, 0.3f,
+	-4.3f, 2.3f, 0.3f,
+	-4.3f, 2.3f, 0.7f,
+	-4.7f, 2.3f, 0.7f,
+
+	/* Back Side */
+	-4.7f, 2.7f, 0.3f,
+	-4.7f, 2.7f, 0.7f,
+	-4.3f, 2.7f, 0.3f,
+	-4.3f, 2.7f, 0.3f,
+	-4.3f, 2.7f, 0.7f,
+	-4.7f, 2.7f, 0.7f,
+
+	/* Left Side */
+	-4.7f, 2.3f, 0.3f,
+	-4.7f, 2.7f, 0.3f,
+	-4.7f, 2.7f, 0.7f,
+	-4.7f, 2.7f, 0.7f,
+	-4.7f, 2.3f, 0.7f,
+	-4.7f, 2.3f, 0.3f,
+
+	/* Right Side */
+	-4.3f, 2.3f, 0.3f,
+	-4.3f, 2.7f, 0.3f,
+	-4.3f, 2.7f, 0.7f,
+	-4.3f, 2.7f, 0.7f,
+	-4.3f, 2.3f, 0.7f,
+	-4.3f, 2.3f, 0.3f
+};
+
 //Initial position of the cube in relation to the maze
 static int treasure_pos[2] = { 2, 0 }; // [0] is for y and [1] is for x
 
@@ -251,24 +301,28 @@ void updateTreasurePos(double newY, double newX) {
 	if (newY < treasure_pos[0]) { //This means we are going up
 		for (int i = 1; i < (36 * 3); i += 3) {
 			treasure[i] += abs(newY - treasure_pos[0]) * 1.0f;
+			treasureOnCol[i] += abs(newY - treasure_pos[0]) * 1.0f;
 		}
 	}
 
 	if (newY > treasure_pos[0]) { //This means we are going down
 		for (int i = 1; i < (36 * 3); i += 3) {
 			treasure[i] -= abs(newY - treasure_pos[0]) * 1.0f;
+			treasureOnCol[i] -= abs(newY - treasure_pos[0]) * 1.0f;
 		}
 	}
 
 	if (newX < treasure_pos[1]) { //This means we are going to the left
 		for (int i = 0; i < (36 * 3); i += 3) {
 			treasure[i] -= abs(newX - treasure_pos[1]) * 1.0f;
+			treasureOnCol[i] -= abs(newX - treasure_pos[1]) * 1.0f;
 		}
 	}
 
 	if (newX > treasure_pos[1]) { //This means we are going to the right
 		for (int i = 0; i < (36 * 3); i += 3) {
 			treasure[i] += abs(newX - treasure_pos[1]) * 1.0f;
+			treasureOnCol[i] += abs(newX - treasure_pos[1]) * 1.0f;
 		}
 	}
 
@@ -310,16 +364,8 @@ GLboolean checkCollision() {
 };
 
 void makeTreasureSmaller() {
-	float scaleFactor = 0.5f;
-
-	for (int i = 0; i < 18; i += 3) {
-		treasure[i] *= scaleFactor;
-		treasure[i + 1] *= scaleFactor;
-		treasure[i + 2] *= scaleFactor;
-	}
-
-	for (int i = 0; i < 72; i++) {
-		treasure_uv_coords[i] *= 0.5;
+	for (int i = 0; i < 108; i++) {
+		treasure[i] = treasureOnCol[i];
 	}
 }
 
@@ -332,6 +378,7 @@ glm::mat4 getViewMatrix() {
 glm::mat4 getProjectionMatrix() {
 	return ProjectionMatrix;
 }
+
 // Field Of View
 float FOV = 60.0f;
 // Initial position
@@ -902,17 +949,26 @@ int main(void)
 		// For the movement of the player
 		glfwSetKeyCallback(window, movePlayer);
 
-		// For the player
-		glBindBuffer(GL_ARRAY_BUFFER, playerbuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(player), player, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		// For the player. The player is visible when there hasn't been a collision
+		if (!checkCollision()) {
+			glBindBuffer(GL_ARRAY_BUFFER, playerbuffer);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(player), player, GL_STATIC_DRAW);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+			// For the color of the player
+			glBindBuffer(GL_ARRAY_BUFFER, playerColorBuffer);
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-		// For the color of the player
-		glBindBuffer(GL_ARRAY_BUFFER, playerColorBuffer);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+			// Draw player
+			glDrawArrays(GL_TRIANGLES, 0, RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM);
+		}
+		else {
+			// Clear the player buffer when not visible
+			glBindBuffer(GL_ARRAY_BUFFER, playerbuffer);
+			glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_STATIC_DRAW); // Clear the buffer
 
-		// Draw player
-		glDrawArrays(GL_TRIANGLES, 0, RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM);
+			glBindBuffer(GL_ARRAY_BUFFER, playerColorBuffer);
+			glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_STATIC_DRAW); // Clear the UV buffer
+		}
 
 		// This is for the first random spawn of the treasure
 		static GLboolean firstSpawn = true;
@@ -925,43 +981,44 @@ int main(void)
 			firstSpawn = false;
 		}
 
-		// The treasure moves around the maze every 3 seconds
-		static double lastTime = 0.0;
-		double currentTime = glfwGetTime();
-
-		if (currentTime - lastTime >= 3.0) {  // Move every 3 seconds
-			int randomNumber = generateRandomNumber();
-			findAvailableTreasurePos();
-			int newY = availableTreasurePos[randomNumber][0];
-			int newX = availableTreasurePos[randomNumber][1];
-			updateTreasurePos(newY, newX);
-			lastTime = currentTime;
-		}
-
-		// Make the program "sleep" for 2 seconds and then close (if the player touched the treasure)
+		// The treasure moves around the maze every 3 seconds. If the treasure has been touched it does not change it's position
+		static GLboolean touched = false;
 		if (checkCollision()) {
-			double startTime = glfwGetTime();
-			while (glfwGetTime() - startTime < 2.0) {
-				makeTreasureSmaller();
-				glfwPollEvents();
-			}
-			glfwSetWindowShouldClose(window, GLFW_TRUE);
+			makeTreasureSmaller();
+			touched = true;
 		}
 
-		// For the treasure
+		if (!touched) { // Not yet touched so change position randomly
+			static double lastTime = 0.0;
+			double currentTime = glfwGetTime();
+			if (currentTime - lastTime >= 3.0) {  // Move every 3 seconds
+				int randomNumber = generateRandomNumber();
+				findAvailableTreasurePos();
+				int newY = availableTreasurePos[randomNumber][0];
+				int newX = availableTreasurePos[randomNumber][1];
+				updateTreasurePos(newY, newX);
+				lastTime = currentTime;
+			}
+		}else { // Player touched the treasure, make it small, let the user see it and the dissapear
+			static double lastTime2 = glfwGetTime();
+			double currentTime2 = glfwGetTime();
+			if (currentTime2 - lastTime2 >= 3.0) {  // After 3 seconds
+				updateTreasurePos(-100, 100); // Move the treasure out of the view
+				lastTime2 = currentTime2;
+			}
+		}
+
 		glBindBuffer(GL_ARRAY_BUFFER, treasurebuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(treasure), treasure, GL_STATIC_DRAW);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-		// For the texture of the treasure
-		glUniform1i(glGetUniformLocation(programID, "useTexture"), 1); // 1 = true
+		glUniform1i(glGetUniformLocation(programID, "useTexture"), 1);
 		glActiveTexture(GL_TEXTURE0);
-
 		glEnableVertexAttribArray(2);
+
+		// For the texture
 		glBindBuffer(GL_ARRAY_BUFFER, treasureUVbuffer);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		//Draw the treasure
 		glDrawArrays(GL_TRIANGLES, 0, RECT_VERTICES_NUM * SIDE_NUM * COORDS_NUM);
 
 		glUniform1i(glGetUniformLocation(programID, "myTextureSampler"), 0); // Texture unit 0
