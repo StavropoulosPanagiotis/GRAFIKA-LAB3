@@ -1002,7 +1002,7 @@ int main(void)
 		}else { // Player touched the treasure, make it small, let the user see it and the dissapear
 			static double lastTime2 = glfwGetTime();
 			double currentTime2 = glfwGetTime();
-			if (currentTime2 - lastTime2 >= 3.0) {  // After 3 seconds
+			if (currentTime2 - lastTime2 >= 2.0) {  // After 2 seconds
 				updateTreasurePos(-100, 100); // Move the treasure out of the view
 				lastTime2 = currentTime2;
 			}
